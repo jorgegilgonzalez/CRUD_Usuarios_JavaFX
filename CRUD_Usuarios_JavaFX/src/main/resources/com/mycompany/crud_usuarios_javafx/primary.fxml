@@ -29,5 +29,6 @@
       <Button fx:id="btnBuscar" layoutX="322.0" layoutY="133.0" mnemonicParsing="false" onAction="#btnBuscarOnAction" prefHeight="34.0" prefWidth="83.0" text="Buscar" />
       <Button fx:id="btnIngresos" layoutX="322.0" layoutY="183.0" mnemonicParsing="false" onAction="#btnIngresosOnAction" prefHeight="34.0" prefWidth="83.0" text="Ingresos" />
       <Button fx:id="btnSalir" layoutX="322.0" layoutY="230.0" mnemonicParsing="false" onAction="#btnSalirOnAction" prefHeight="34.0" prefWidth="83.0" text="Salir" />
+      <Label layoutX="23.0" layoutY="142.0" text="Premium" />
    </children>
 </Pane>
