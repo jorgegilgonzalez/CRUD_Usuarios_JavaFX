@@ -1,12 +1,135 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+ */
 package com.mycompany.crud_usuarios_javafx;
 
-import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import Utilidades.Validar;
+import modelo.*;
 
-public class PrimaryController {
+
+
+/**
+ * FXML Controller class
+ *
+ * @author donjo
+ */
+public class PrimaryController implements Initializable {
+
+    ConnectionDB conexion =  new ConnectionDB();
+    
+    @FXML
+    private Button btnAnadir;
 
     @FXML
-    private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
+    private Button btnBuscar;
+
+    @FXML
+    private Button btnIngresos;
+
+    @FXML
+    private Button btnLimpiar;
+
+    @FXML
+    private Button btnSalir;
+
+    @FXML
+    private ToggleGroup grpSiNo;
+
+    @FXML
+    private Pane layPane;
+
+    @FXML
+    private Pane panePremium;
+
+    @FXML
+    private RadioButton radioNo;
+
+    @FXML
+    private RadioButton radioSi;
+
+    @FXML
+    private TextField txtContrasena;
+
+    @FXML
+    private TextField txtDescuento;
+
+    @FXML
+    private TextField txtUsuario;
+
+     @FXML
+    void btnAnadirOnAction(ActionEvent event) throws SQLException {
+
+        Connection con = conexion.openConnection();
+        
+        
+        Usuario usuario = new Usuario();
+        
+        if(Validar.validaEmail(txtUsuario.getText())){//valido el email antes de proceder a insertar el registro
+        usuario.setCorreo_electronico(txtUsuario.getText());
+        usuario.setPass(txtContrasena.getText());
+        usuario.setDescuentos(Double.parseDouble(txtDescuento.getText()));
+        usuario.setPremium(radioSi.isSelected());
+        //System.out.println(usuario.toString());
+        
+        CRUDUsuario.insertarUsuario(con, usuario);}//si no valida avisa por consola
+        else System.out.println("El email no esta en formato correcto");
+        
+        
+        ConnectionDB.closeConnection(con);
+        btnLimpiarOnAction(event);//para que borre los datos una vez insertado el registro
+         
     }
+
+    @FXML
+    void btnBuscarOnAction(ActionEvent event) throws SQLException {
+
+       Connection con = conexion.openConnection();
+       CRUDUsuario.buscarUsuario(con, txtUsuario.getText());
+       ConnectionDB.closeConnection(con);
+        
+    }
+
+    @FXML
+    void btnIngresosOnAction(ActionEvent event) throws SQLException {
+        
+        Connection con = conexion.openConnection();
+        CRUDUsuario.totalIngresos(con);
+        ConnectionDB.closeConnection(con);
+                
+    }
+
+    @FXML
+    void btnLimpiarOnAction(ActionEvent event) {
+
+        txtUsuario.setText("");
+        txtContrasena.setText("");
+        txtDescuento.clear();
+        radioNo.setSelected(true);
+                       
+        
+    }
+
+    @FXML
+    void btnSalirOnAction(ActionEvent event) {
+
+        System.exit(0);
+    }
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }    
+    
 }

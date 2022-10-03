@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.swing.JOptionPane;
 
 import Utilidades.convertirSHA256;
 import java.sql.PreparedStatement;
@@ -41,7 +40,7 @@ public class CRUDUsuario {
             
                   
             ps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Usuario Insertado CORRECTAMENTE");
+            System.out.println("Usuario Insertado CORRECTAMENTE");
             
         } catch (SQLException ex) {
             System.out.print("ERROR AL INSERTAR");
@@ -67,6 +66,7 @@ public class CRUDUsuario {
                 while (rs.next())
                 {
                    encontrado=true;
+                   u.setCorreo_electronico(correo);//anado este campo para que salga el correo tambien en consola en vez de null
                    u.setPass(rs.getString("pass"));
                    u.setDescuentos(rs.getDouble("descuentos"));
                    u.setPremium(rs.getBoolean("premium"));
@@ -75,12 +75,12 @@ public class CRUDUsuario {
                 if(encontrado)
                      System.out.println(u.toString());
                 else
-                      JOptionPane.showMessageDialog(null, "Usuario NO ENCONTRADO");
+                      System.out.println("Usuario NO ENCONTRADO");
                 
         }
         catch(SQLException ex)
          {
-             JOptionPane.showMessageDialog(null, ex.toString());
+             System.out.println(ex.toString());
             
          }
       
@@ -112,12 +112,12 @@ public class CRUDUsuario {
                   
                 }
                 
-                      JOptionPane.showMessageDialog(null, "Total Ingresos : "+(total_ingresos-total_descuentos));
+                      System.out.println("Total Ingresos : "+(total_ingresos-total_descuentos));
                 
         }
         catch(SQLException ex)
          {
-             JOptionPane.showMessageDialog(null, ex.toString());
+             System.out.println(ex.toString());
             
          }
     }

@@ -1,7 +1,7 @@
-package data;
+package modelo;
 
 import java.sql.*;
-import javax.swing.JOptionPane;
+
 
 public class ConexionSingleton {
    static String bd = "juan";
@@ -53,9 +53,9 @@ public class ConexionSingleton {
        try {
        conexion.close();
        conexion = null;
-      JOptionPane.showMessageDialog(null,"La conexion a la  base de datos "+bd+" a terminado");
+           System.out.println("La conexion a la  base de datos "+bd+" ha terminado");
        } catch (Exception e) {
-	  JOptionPane.showMessageDialog(null,"Error al cerrar la conexión.");
+	          System.out.println("Error al cerrar la conexión.");
        }
    }
   

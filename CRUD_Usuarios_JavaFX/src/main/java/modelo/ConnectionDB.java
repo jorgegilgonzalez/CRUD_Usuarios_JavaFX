@@ -14,13 +14,16 @@ import java.sql.*;
 public class ConnectionDB {
     
 
-    public static Connection openConnection() {
+    public Connection openConnection() {
         
         Connection con =null;
         //HAy que añadir la zona sino da ERROR en la conexion
-        String url="jdbc:mysql://localhost:3306/db_cliente?serverTimezone=UTC"; 
+         
         String user="root";
-        String pass="toor";
+        String pass="root";
+        String nombreBD = "db_cliente";// nombre de base de datos
+        String url="jdbc:mysql://localhost:3306/"+ nombreBD +"?serverTimezone=UTC";
+        
         try {
         // Cargar el driver de mysql
             Class.forName("com.mysql.cj.jdbc.Driver");// la otra que se ultilizaba en el ejemplo anterior esta OBSOLETA
@@ -28,6 +31,8 @@ public class ConnectionDB {
             // Obtener la conexión
             con= DriverManager.getConnection(url,user,pass);
             
+            if (con!=null)
+                System.out.println("Conexión conseguida");//comprobar conexion en consola
             
         } catch (SQLException e) {
             System.out.println("SQL Exception: " + e.toString());
@@ -37,11 +42,12 @@ public class ConnectionDB {
         return con;
     }
     
-    public void closeConnection(Connection con) throws SQLException{
+    public static void closeConnection(Connection con) throws SQLException{
         
         try{
             //Cierra la conexión
             con.close();
+            System.out.println("Conexion cerrada");
         }catch(SQLException e){
             System.out.println("SQL Exception: "+e.toString());
         }//Cierra try-catch
