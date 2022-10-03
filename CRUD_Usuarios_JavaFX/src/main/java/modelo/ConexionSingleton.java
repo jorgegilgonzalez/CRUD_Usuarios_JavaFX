@@ -4,9 +4,9 @@ import java.sql.*;
 
 
 public class ConexionSingleton {
-   static String bd = "juan";
-   static String login = "juan";
-   static String password = "juan";
+   static String bd = "db_cliente";
+   static String login = "root";
+   static String password = "root";
    String host = "localhost";
    static String url = "jdbc:mysql://";
    static Connection conexion; // atributo para  guardar el objeto connexió.

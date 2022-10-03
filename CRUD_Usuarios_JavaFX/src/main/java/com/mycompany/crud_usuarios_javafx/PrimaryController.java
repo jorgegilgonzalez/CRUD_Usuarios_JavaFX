@@ -5,7 +5,6 @@
 package com.mycompany.crud_usuarios_javafx;
 
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -25,7 +24,7 @@ import modelo.*;
  */
 public class PrimaryController implements Initializable {
 
-    ConnectionDB conexion =  new ConnectionDB();
+    ConexionSingleton conexion = ConexionSingleton.getInstancia();
     
     @FXML
     private Button btnAnadir;
@@ -69,7 +68,7 @@ public class PrimaryController implements Initializable {
      @FXML
     void btnAnadirOnAction(ActionEvent event) throws SQLException {
 
-        Connection con = conexion.openConnection();
+        
         
         
         Usuario usuario = new Usuario();
@@ -81,11 +80,11 @@ public class PrimaryController implements Initializable {
         usuario.setPremium(radioSi.isSelected());
         //System.out.println(usuario.toString());
         
-        CRUDUsuario.insertarUsuario(con, usuario);}//si no valida avisa por consola
+        CRUDUsuario.insertarUsuario(conexion.getConexion(), usuario);}//si no valida avisa por consola
         else System.out.println("El email no esta en formato correcto");
         
         
-        ConnectionDB.closeConnection(con);
+        conexion.desconectar();
         btnLimpiarOnAction(event);//para que borre los datos una vez insertado el registro
          
     }
@@ -93,18 +92,18 @@ public class PrimaryController implements Initializable {
     @FXML
     void btnBuscarOnAction(ActionEvent event) throws SQLException {
 
-       Connection con = conexion.openConnection();
-       CRUDUsuario.buscarUsuario(con, txtUsuario.getText());
-       ConnectionDB.closeConnection(con);
+       
+       CRUDUsuario.buscarUsuario(conexion.getConexion(), txtUsuario.getText());
+       conexion.desconectar();
         
     }
 
     @FXML
     void btnIngresosOnAction(ActionEvent event) throws SQLException {
         
-        Connection con = conexion.openConnection();
-        CRUDUsuario.totalIngresos(con);
-        ConnectionDB.closeConnection(con);
+        ;
+        CRUDUsuario.totalIngresos(conexion.getConexion());
+        conexion.desconectar();
                 
     }
 
